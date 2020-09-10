@@ -44,5 +44,5 @@ class MuseumTest < Minitest::Test
 
     assert_equal [dead_sea_scrolls, gems_and_minerals], dmns.recommend_exhibits(patron_1)
     assert_equal [imax], dmns.recommend_exhibits(patron_2)
-  end 
+  end
 end
