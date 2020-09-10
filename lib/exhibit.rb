@@ -4,6 +4,4 @@ class Exhibit
     @name = data[:name]
     @cost = data[:cost]
   end
-
-
 end
