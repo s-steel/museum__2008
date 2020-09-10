@@ -7,4 +7,5 @@ class Patron
     @interests = []
   end
 
+
 end
