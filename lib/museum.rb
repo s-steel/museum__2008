@@ -1,6 +1,6 @@
 class Museum
   attr_reader :name
-  attr_accessor :exhibits
+  attr_accessor :exhibits, :patrons
   def initialize(name)
     @name = name
     @exhibits = []
@@ -18,5 +18,9 @@ class Museum
         exhibit.name == interest
       end
     end.flatten
+  end
+
+  def admit(patron)
+    @patrons << patron
   end
 end
