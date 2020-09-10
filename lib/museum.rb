@@ -72,7 +72,26 @@ class Museum
     patrons = patrons_by_exhibit_interest[exhibit]
     patrons.find_all do |patron|
       patron.spending_money < exhibit.cost
-    end 
+    end
   end
 
+    # @patrons.find_all do |patron|
+    #   patron.interests.include?(exhibit.name) &&
+    #   patron.spending_money < exhibit.cost
+    # end
+# hope's way ^
+
+  def draw_lottery_winner(exhibit)
+    winner = ticket_lottery_contestants(exhibit).sample
+    winner.name if !winner.nil?
+  end
+
+  def announce_lottery_winner(exhibit)
+    winner = draw_lottery_winner(exhibit)
+    if winner
+      "#{winner} has won the #{exhibit.name} exhibit lottery"
+    else
+      "No winners for this lottery"
+    end 
+  end
 end
