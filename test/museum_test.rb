@@ -182,7 +182,37 @@ class MuseumTest < Minitest::Test
 
     assert_equal "No winners for this lottery", dmns.announce_lottery_winner(gems_and_minerals)
 
-    dmns.stubs(:draw_lottery_winner).returns("Bob")    
+    dmns.stubs(:draw_lottery_winner).returns("Bob")
     assert_equal "Bob has won the IMAX exhibit lottery", dmns.announce_lottery_winner(imax)
+  end
+
+  def test_admitting_patrons_evaluates_exhibits_attended
+    dmns = Museum.new("Denver Museum of Nature and Science")
+    gems_and_minerals = Exhibit.new({name: "Gems and Minerals", cost: 0})
+    dead_sea_scrolls = Exhibit.new({name: "Dead Sea Scrolls", cost: 10})
+    imax = Exhibit.new({name: "IMAX",cost: 15})
+    dmns.add_exhibit(gems_and_minerals)
+    dmns.add_exhibit(imax)
+    dmns.add_exhibit(dead_sea_scrolls)
+    tj = Patron.new("TJ", 7)
+    tj.add_interest("IMAX")
+    tj.add_interest("Dead Sea Scrolls")
+    dmns.admit(tj)
+
+    assert_equal 0, dmns.revenue
+    assert_equal 7, tj.spending_money
+
+    patron_1 = Patron.new("Bob", 10)
+    patron_1.add_interest("Dead Sea Scrolls")
+    patron_1.add_interest("IMAX")
+    dmns.admit(patron_1)
+    assert_equal 0, patron_1.spending_money
+    assert_equal 10, dmns.revenue
+
+    patron_2 = Patron.new("Sally", 20)
+    patron_2.add_interest("IMAX")
+    patron_2.add_interest("Dead Sea Scrolls")
+    dmns.admit(patron_2)
+    assert_equal 5, patron_2.spending_money
   end
 end
